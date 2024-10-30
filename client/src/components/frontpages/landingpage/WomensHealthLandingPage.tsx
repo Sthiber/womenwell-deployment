@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Heart, Users, Calendar, Phone } from "lucide-react";
 import IconLogo from "../header/IconLogo";
-import Navbar from "../header/Navbar";
+import Navbar from "../header/NavBar";
 import NavButton from "../../ui/buttons/NavButton";
 import MainSection from "./sections/MainSection";
 
