@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy Node.js app to Azure Web App - womenwell-backend-server
 
 on:
@@ -26,10 +23,13 @@ jobs:
           npm install
           npm run build --if-present
           npm run test --if-present
+        working-directory: ./server
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
+        run: |
+          cd ./server
+          zip -r ../release.zip .
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -41,10 +41,6 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -52,20 +48,17 @@ jobs:
           name: node-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip release.zip -d app
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_75FA92D27EB9490C8DA45344CA4614D1 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_05D162B3BE8D4F308E6CEE263991C43F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D59491CFCD154550A6CE5AFA1EF534AA }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'womenwell-backend-server'
-          slot-name: 'Production'
-          package: .
-          
+          package: './app'
