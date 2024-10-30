@@ -21,10 +21,13 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await axios.post("http://localhost:3000/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://hospital-system-server-pajgagi2t-sthibers-projects.vercel.app/auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
       if (response.data.token) {
         // Store the JWT token and user role in the browser
