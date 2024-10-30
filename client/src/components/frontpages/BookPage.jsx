@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import IconLogo from "./header/IconLogo";
-import Navbar from "./header/Navbar";
+import Navbar from "./header/NavBar";
 import NavButton from "../ui/buttons/NavButton";
 
 function BookPage() {
