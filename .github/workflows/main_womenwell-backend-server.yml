@@ -41,7 +41,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          cd ./server
+          cd server
           zip -r ../release.zip .
 
       - name: Upload artifact for deployment job
@@ -55,6 +55,7 @@ jobs:
     needs: build
     environment:
       name: 'Production'
+      url: ${{ steps.deploy-to-azure.outputs.webapp-url }}
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -72,6 +73,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: 'Deploy to Azure Web App'
+        id: deploy-to-azure
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'womenwell-backend-server'
