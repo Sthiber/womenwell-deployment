@@ -22,7 +22,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "https://hospital-system-server-pajgagi2t-sthibers-projects.vercel.app/auth/login",
+        "https://hospital-system-server.vercel.app/auth/login",
         {
           email,
           password,
