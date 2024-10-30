@@ -25,7 +25,7 @@ export default function PrescriptionPage() {
         }
 
         const response = await axios.get(
-          "http://localhost:3000/auth/patient/medications",
+          "https://hospital-system-server.vercel.app/auth/patient/medications",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
