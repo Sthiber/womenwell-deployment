@@ -15,7 +15,8 @@ const app = express();
 
 // CORS options configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Allow your frontend's origin
+  origin:
+    process.env.FRONTEND_URL || "https://hospital-system-frontend.vercel.app", // Allow your frontend's origin
   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
   credentials: true, // Allow credentials such as cookies or headers
   allowedHeaders: ["Content-Type", "Authorization"], // Allow specific headers
@@ -23,6 +24,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); // Enable CORS with options
 app.use(bodyParser.json()); // Parse JSON requests
+app.options("*", cors(corsOptions)); // Handle preflight requests
 
 // Routes
 app.use("/api/edibles", fruitRouter);
