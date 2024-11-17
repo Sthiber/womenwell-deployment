@@ -31,12 +31,7 @@ app.use("/appointment", appointmentRouter);
 app.use("/dataFetch", dataFetchRouter);
 
 // Serve static files for the frontend
-const __dirname = path.resolve(); // Ensure correct directory resolution
-app.use(express.static(path.join(__dirname, "build"))); // Adjust "build" if your frontend is in a different folder
 
 // Handle all other routes by serving index.html for client-side routing
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 
 export default app;
