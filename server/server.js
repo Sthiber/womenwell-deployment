@@ -25,13 +25,17 @@ app.use(cors(corsOptions)); // Enable CORS with options
 app.use(bodyParser.json()); // Parse JSON requests
 
 // Routes
-app.use("/edibles", fruitRouter);
-app.use("/auth", authRouter);
-app.use("/appointment", appointmentRouter);
-app.use("/dataFetch", dataFetchRouter);
+app.use("/api/edibles", fruitRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/appointment", appointmentRouter);
+app.use("/api/dataFetch", dataFetchRouter);
 
-// Serve static files for the frontend
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "frontend/build")));
 
-// Handle all other routes by serving index.html for client-side routing
+// Fallback for React client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+});
 
 export default app;
