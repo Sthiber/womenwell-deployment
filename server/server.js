@@ -4,6 +4,8 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import path from "path"; // For serving static files
+
 import fruitRouter from "./routers/edibles.js";
 import authRouter from "./routers/auth.js";
 import appointmentRouter from "./routers/appointment.js";
@@ -28,5 +30,13 @@ app.use("/auth", authRouter);
 app.use("/appointment", appointmentRouter);
 app.use("/dataFetch", dataFetchRouter);
 
-// Start the server
+// Serve static files for the frontend
+const __dirname = path.resolve(); // Ensure correct directory resolution
+app.use(express.static(path.join(__dirname, "build"))); // Adjust "build" if your frontend is in a different folder
+
+// Handle all other routes by serving index.html for client-side routing
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
 export default app;
